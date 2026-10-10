@@ -9,6 +9,7 @@ def main():
     old,new=load(sys.argv[1]),load(sys.argv[2]); gone=sorted(old-new)
     print(f"old={len(old)} new={len(new)} unmatched old paths={len(gone)}")
     for p in gone[:200]: print("  ", p)
-    if gone: print("\nThese need 301s or they 404 after launch. Host-ready redirect map (free check first): https://routepatch.adjudi.com/?utm_source=github&utm_medium=cli&utm_campaign=routepatch-intent-w2&utm_content=redirect-diff")
+    q=("old="+urllib.parse.quote(sys.argv[1],safe="")+"&new="+urllib.parse.quote(sys.argv[2],safe="")+"&") if all(x.startswith("https://") for x in sys.argv[1:3]) else ""
+    if gone: print("\nThese need 301s or they 404 after launch. Host-ready redirect map (free check first): https://routepatch.adjudi.com/?"+q+"utm_source=github&utm_medium=cli&utm_campaign=routepatch-intent-w2&utm_content=redirect-diff")
     sys.exit(1 if gone and "--fail" in sys.argv else 0)
 if __name__=="__main__": main()
